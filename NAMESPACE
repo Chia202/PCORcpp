@@ -1,0 +1,4 @@
+useDynLib(PCORcpp, .registration = TRUE)
+importFrom(Rcpp, sourceCpp)
+
+export(pcov, pcor, pcor.test, pcov_cpp, pcor_cpp, pcor_test_cpp)

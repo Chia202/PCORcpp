@@ -1,0 +1,14 @@
+Package: PCORcpp
+Type: Package
+Title: Projection Correlation in C++
+Version: 0.1.0
+Author: Xie Zhongming
+Maintainer: Xie Zhongming <xzm1@ruc.edu.cn>
+Description: A C++ implementation of projection correlation between two random vectors using Rcpp and Armadillo. This package provides efficient computation of projection covariance, projection correlation, and independence testing.
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.2
+Imports: Rcpp (>= 1.0.0)
+LinkingTo: Rcpp, RcppArmadillo
+SystemRequirements: C++11, OpenMP
