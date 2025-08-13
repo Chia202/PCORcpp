@@ -1,6 +1,6 @@
 # PCORcpp
 
-This package provides a C++ implementation of Projection Correlation (PCOR) computations, leveraging Rcpp and Armadillo for performance optimization An `R` implementation is available at [PCOR](https://github.com/Yilin-Zhang10/PCOR).
+This package provides a `C++` implementation of Projection Correlation (PCOR) computations, leveraging `Rcpp`, `Armadillo` and `OPENMP` for performance optimization An `R` implementation is available at [PCOR](https://github.com/Yilin-Zhang10/PCOR).
 
 ## Installation
 
