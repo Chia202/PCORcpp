@@ -4,18 +4,18 @@
 \alias{pcor.test}
 \title{Perform projection correlation independence test}
 \usage{
-pcor.test(X, Y, estimation_method = "u", times = 199, n_threads = 4)
+pcor.test(X, Y, estimation.method = "u", times = 199, n.threads = 4)
 }
 \arguments{
 \item{X}{A numeric matrix of dimension n x p, where each row is an i.i.d. observation of the first vector.}
 
 \item{Y}{A numeric matrix of dimension n x q, where each row is an i.i.d. observation of the second vector.}
 
-\item{estimation_method}{A character string, either "u" or "v". If "u", U-statistics are used, if "v", V-statistics are used.}
+\item{estimation.method}{A character string, either "u" or "v". If "u", U-statistics are used, if "v", V-statistics are used.}
 
 \item{times}{An integer specifying the number of permutations to perform. Default is 199.}
 
-\item{n_threads}{An integer specifying the number of threads to use for parallel computation. Default is 4.}
+\item{n.threads}{An integer specifying the number of threads to use for parallel computation. Default is 4.}
 }
 \value{
 A list with components:
@@ -29,6 +29,6 @@ This function performs a projection correlation independence test between two ra
 \examples{
 X <- matrix(rnorm(10 * 7, 1), 10, 7)
 Y <- matrix(rnorm(10 * 6, 1), 10, 6)
-pcor.test(X, Y, estimation_method = "v", times = 199, n_threads = 4)
+pcor.test(X, Y, estimation.method = "v", times = 199, n.threads = 4)
 
 }

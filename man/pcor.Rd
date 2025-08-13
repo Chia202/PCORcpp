@@ -4,16 +4,16 @@
 \alias{pcor}
 \title{Calculate the projection correlation of two random vectors}
 \usage{
-pcor(X, Y, estimation_method = "u", n_threads = 4)
+pcor(X, Y, estimation.method = "u", n.threads = 4)
 }
 \arguments{
 \item{X}{A numeric matrix of dimension n x p, where each row is an i.i.d. observation of the first vector.}
 
 \item{Y}{A numeric matrix of dimension n x q, where each row is an i.i.d. observation of the second vector.}
 
-\item{estimation_method}{A character string, either "u" or "v". If "u", U-statistics are used, if "v", V-statistics are used.}
+\item{estimation.method}{A character string, either "u" or "v". If "u", U-statistics are used, if "v", V-statistics are used.}
 
-\item{n_threads}{An integer specifying the number of threads to use for parallel computation. Default is 4.}
+\item{n.threads}{An integer specifying the number of threads to use for parallel computation. Default is 4.}
 }
 \value{
 A numeric scalar representing the projection correlation between X and Y.
@@ -24,6 +24,6 @@ This function computes the projection correlation between two random vectors.
 \examples{
 X <- matrix(rnorm(100 * 34, 1), 100, 34)
 Y <- matrix(rnorm(100 * 62, 1), 100, 62)
-pcor(X, Y, estimation_method = "u", n_threads = 4)
+pcor(X, Y, estimation.method = "u", n.threads = 4)
 
 }

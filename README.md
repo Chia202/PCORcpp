@@ -24,23 +24,23 @@ X <- matrix(rnorm(100 * 5), 100, 5)
 Y <- matrix(rnorm(100 * 3), 100, 3)
 
 # Compute projection covariance
-result <- pcov(X, Y, n_threads = 4)
+result <- pcov(X, Y, n.threads = 4)
 print(result)
 
 # Compute projection correlation coefficient
-result <- pcor(X, Y, estimation_method = "u", n_threads = 4)
+result <- pcor(X, Y, estimation.method = "u", n.threads = 4)
 print(result)
 
 # Perform independence test
-test_result <- pcor.test(X, Y, times = 199, n_threads = 4)
+test_result <- pcor.test(X, Y, times = 199, n.threads = 4)
 print(test_result)
 ```
 
 ## Parameters
 
-- `estimation_method`: Estimation method, "u" for U-statistic, "v" for V-statistic
+- `estimation.method`: Estimation method, "u" for U-statistic, "v" for V-statistic
 - `times`: Number of permutations for permutation test
-- `n_threads`: Number of threads for parallel computation
+- `n.threads`: Number of threads for parallel computation
 
 ## Reference
 
