@@ -126,37 +126,8 @@ arma::vec pcov_va_cpp(const arma::mat &X, const arma::mat &Y,
 	return mean(results, 1);
 }
 
-//' @name pcov_cpp
-//' @title Calculate the Projection Covariance of Two Random Vectors
-//'
-//' @description This function computes the projection covariance between two
-// random vectors. ' The two input vectors can have different dimensions, but
-// must have the same number of samples (rows). ' The estimation can be performed
-// using either U-statistics or V-statistics.
-//'
-//' @param X A numeric matrix of dimension n x p, where each row is an i.i.d.
-// observation of the first vector. ' @param Y A numeric matrix of dimension n x
-// q, where each row is an i.i.d. observation of the second vector. ' @param
-// estimation_method A character string, either \code{"u"} or \code{"v"}. '   If
-//\code{"u"}, U-statistics are used for estimation; if \code{"v"}, V-statistics
-// are used. ' @param n_threads An integer specifying the number of threads to
-// use for computation. Default is 4.
-//'
-//' @return A numeric scalar representing the projection covariance between X
-// and Y.
-//'
-//' @examples
-//' X <- matrix(rnorm(100 * 34, 1), 100, 34)
-//' Y <- matrix(rnorm(100 * 62, 1), 100, 62)
-//' pcov_cpp(X, Y, estimation_method = "u", n_threads = 4)
-//'
-//' @seealso \code{\link{pcor_cpp}}, \code{\link{pcor_test_cpp}}
-//'
-//' @references
-//' L. Zhu, K. Xu, R. Li, W. Zhong (2017). Projection correlation between two
-// random vectors. Biometrika, 104, 829-843. \doi{10.1093/biomet/asx043}
-//'
-//' @export
+
+// [[Rcpp::export]]
 double pcov_cpp(const arma::mat &X, const arma::mat &Y,
 				const std::string &estimation_method, const int n_threads = 4)
 {
@@ -172,36 +143,8 @@ double pcov_cpp(const arma::mat &X, const arma::mat &Y,
 	return t(1);
 }
 
-//' @name pcor_cpp
-//' @title Calculate the Projection Correlation of Two Random Vectors
-//'
-//' @description This function computes the projection correlation between two
-// random vectors, ' which can have different dimensions but must share the same
-// sample size. ' The estimation can be done using U-statistics or V-statistics.
-//'
-//' @param X A numeric matrix of dimension n x p, where each row is an i.i.d.
-// observation of the first vector. ' @param Y A numeric matrix of dimension n x
-// q, where each row is an i.i.d. observation of the second vector. ' @param
-// estimation_method A character string, either \code{"u"} or \code{"v"}. '   If
-//\code{"u"}, U-statistics are used for estimation; if \code{"v"}, V-statistics
-// are used. Default is \code{"u"}. ' @param n_threads An integer specifying the
-// number of threads to use for parallel computation. Default is 4.
-//'
-//' @return A numeric scalar representing the projection correlation between X
-// and Y.
-//'
-//' @examples
-//' X <- matrix(rnorm(100 * 34, 1), 100, 34)
-//' Y <- matrix(rnorm(100 * 62, 1), 100, 62)
-//' pcor_cpp(X, Y, estimation_method = "u", n_threads = 4)
-//'
-//' @seealso \code{\link{pcov_cpp}}, \code{\link{pcor_test_cpp}}
-//'
-//' @references
-//' L. Zhu, K. Xu, R. Li, W. Zhong (2017). Projection correlation between two
-// random vectors. Biometrika, 104, 829-843. \doi{10.1093/biomet/asx043}
-//'
-//' @export
+
+// [[Rcpp::export]]
 double pcor_cpp(const arma::mat &X, const arma::mat &Y,
 				const std::string &estimation_method = "u",
 				const int n_threads = 4)
@@ -213,43 +156,7 @@ double pcor_cpp(const arma::mat &X, const arma::mat &Y,
 	return t1 / std::sqrt(t2) / std::sqrt(t3);
 }
 
-//' @name pcov_test_cpp
-//' @title Projection Covariance Test for Independence
-//'
-//' @description Perform a permutation test to assess the independence between
-// two random vectors ' via projection covariance. The two vectors can have
-// different dimensions but ' must share the same sample size.
-//'
-//' @param X A numeric matrix of dimension n x p, where each row is an i.i.d.
-// observation from the first vector.
-//' @param Y A numeric matrix of dimension n x q, where each row is an i.i.d.
-// observation from the second vector.
-//' @param estimation_method A character string, either \code{"u"} or
-//\code{"v"}. If \code{"u"}, U-statistics are used for estimation; if
-//\code{"v"}, V-statistics are used. Default is \code{"u"}.
-//' @param times An integer specifying the number of permutations to perform.
-// Default is 199.
-//' @param n_threads An integer specifying the number of threads to use for
-// parallel computation. Default is 4.
-//'
-//' @return A list with components:
-//' \item{method}{The method name: \code{"Projection Covariance Permutation
-// Test of Independence"}} ' \item{stat.value}{The test statistic value (scaled
-// by sample size).} ' \item{p.value}{The p-value computed from the permutation
-// distribution under the null hypothesis of independence.}
-//'
-//' @examples
-//' X <- matrix(rnorm(10 * 7, 1), 10, 7)
-//' Y <- matrix(rnorm(10 * 6, 1), 10, 6)
-//' pcov_test_cpp(X, Y, estimation_method = "v", times = 199, n_threads = 4)
-//'
-//' @seealso \code{\link{pcov_cpp}}, \code{\link{pcor_cpp}}
-//'
-//' @references
-//' L. Zhu, K. Xu, R. Li, W. Zhong (2017). Projection correlation between two
-// random vectors. Biometrika, 104, 829-843. \doi{10.1093/biomet/asx043}
-//'
-//' @export
+// [[Rcpp::export]]
 Rcpp::List pcov_test_cpp(const arma::mat &X, const arma::mat &Y,
 						 const std::string &estimation_method = "u",
 						 const int times = 199,
@@ -291,41 +198,7 @@ double chisq_va_cpp(const arma::mat &X, const arma::mat &Y,
 	return t(1) / (M_PI * M_PI - t(0));
 }
 
-//' @name pcor_test_cpp
-//' @title Projection Correlation Permutation Test for Independence
-//'
-//' @description Perform a permutation test to assess the independence between
-// two random vectors ' via projection correlation. The two vectors can have
-// different dimensions but ' must share the same sample size.
-//'
-//' @param X A numeric matrix of dimension n x p, where each row is an i.i.d.
-// observation from the first vector. ' @param Y A numeric matrix of dimension n
-// x q, where each row is an i.i.d. observation from the second vector. ' @param
-// estimation_method A character string, either \code{"u"} or \code{"v"}. '   If
-//\code{"u"}, U-statistics are used for estimation; if \code{"v"}, V-statistics
-// are used. Default is \code{"u"}. ' @param times An integer specifying the
-// number of permutations to perform. Default is 199. ' @param n_threads An
-// integer specifying the number of threads to use for parallel computation.
-// Default is 4.
-//'
-//' @return A list with components:
-//' \item{method}{The method name: \code{"Projection Correlation Permutation
-// Test of Independence"}} ' \item{stat.value}{The test statistic value (scaled
-// by sample size).} ' \item{p.value}{The p-value computed from the permutation
-// distribution under the null hypothesis of independence.}
-//'
-//' @examples
-//' X <- matrix(rnorm(10 * 7, 1), 10, 7)
-//' Y <- matrix(rnorm(10 * 6, 1), 10, 6)
-//' pcor_test_cpp(X, Y, estimation_method = "v", times = 199, n_threads = 4)
-//'
-//' @seealso \code{\link{pcov_cpp}}, \code{\link{pcor_cpp}}
-//'
-//' @references
-//' L. Zhu, K. Xu, R. Li, W. Zhong (2017). Projection correlation between two
-// random vectors. Biometrika, 104, 829-843. \doi{10.1093/biomet/asx043}
-//'
-//' @export
+// [[Rcpp::export]]
 Rcpp::List pcor_test_cpp(const arma::mat &X, const arma::mat &Y,
 						 const std::string &estimation_method = "u",
 						 const int times = 199, const int n_threads = 4)
