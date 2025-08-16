@@ -17,7 +17,8 @@
 #'
 #' @export
 pcov <- function(X, Y, estimation.method = "u", n.threads = 4) {
-    pcov_cpp(X, Y, estimation.method, n.threads)
+    # pcov_cpp(X, Y, estimation.method, n.threads)
+    .Call(`_PCORcpp_pcov_cpp`, X, Y, estimation.method, n.threads)
 }
 
 #' @name pcov.test
@@ -43,7 +44,8 @@ pcov <- function(X, Y, estimation.method = "u", n.threads = 4) {
 #'
 #' @export
 pcov.test <- function(X, Y, estimation.method = "u", times = 199, n.threads = 4) {
-    pcov_test_cpp(X, Y, estimation.method, times, n.threads)
+    # pcov_test_cpp(X, Y, estimation.method, times, n.threads)
+    .Call(`_PCORcpp_pcov_test_cpp`, X, Y, estimation.method, times, n.threads)
 }
 
 #' @name pcor
@@ -65,7 +67,8 @@ pcov.test <- function(X, Y, estimation.method = "u", times = 199, n.threads = 4)
 #'
 #' @export
 pcor <- function(X, Y, estimation.method = "u", n.threads = 4) {
-    pcor_cpp(X, Y, estimation.method, n.threads)
+    # pcor_cpp(X, Y, estimation.method, n.threads)
+    .Call(`_PCORcpp_pcor_cpp`, X, Y, estimation.method, n.threads)
 }
 
 #' @name pcor.test
@@ -91,5 +94,6 @@ pcor <- function(X, Y, estimation.method = "u", n.threads = 4) {
 #'
 #' @export
 pcor.test <- function(X, Y, estimation.method = "u", times = 199, n.threads = 4) {
-    pcor_test_cpp(X, Y, estimation.method, times, n.threads)
+    # pcor_test_cpp(X, Y, estimation.method, times, n.threads)
+    .Call(`_PCORcpp_pcor_test_cpp`, X, Y, estimation.method, times, n.threads)
 }

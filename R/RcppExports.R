@@ -27,6 +27,10 @@ NULL
 #' L. Zhu, K. Xu, R. Li, W. Zhong (2017). Projection correlation between two
 NULL
 
+#'
+#' @export
+NULL
+
 #' @name pcor_cpp
 #' @title Calculate the Projection Correlation of Two Random Vectors
 #'
@@ -51,6 +55,10 @@ NULL
 #'
 #' @references
 #' L. Zhu, K. Xu, R. Li, W. Zhong (2017). Projection correlation between two
+NULL
+
+#'
+#' @export
 NULL
 
 #' @name pcov_test_cpp
@@ -92,6 +100,10 @@ NULL
 #' L. Zhu, K. Xu, R. Li, W. Zhong (2017). Projection correlation between two
 NULL
 
+#'
+#' @export
+NULL
+
 #' @name pcor_test_cpp
 #' @title Projection Correlation Permutation Test for Independence
 #'
@@ -121,25 +133,5 @@ NULL
 
 #'
 #' @export
-pcov_cpp <- function(X, Y, estimation_method, n_threads = 4L) {
-    .Call(`_PCORcpp_pcov_cpp`, X, Y, estimation_method, n_threads)
-}
-
-#'
-#' @export
-pcor_cpp <- function(X, Y, estimation_method = "u", n_threads = 4L) {
-    .Call(`_PCORcpp_pcor_cpp`, X, Y, estimation_method, n_threads)
-}
-
-#'
-#' @export
-pcov_test_cpp <- function(X, Y, estimation_method = "u", times = 199L, n_threads = 4L) {
-    .Call(`_PCORcpp_pcov_test_cpp`, X, Y, estimation_method, times, n_threads)
-}
-
-#'
-#' @export
-pcor_test_cpp <- function(X, Y, estimation_method = "u", times = 199L, n_threads = 4L) {
-    .Call(`_PCORcpp_pcor_test_cpp`, X, Y, estimation_method, times, n_threads)
-}
+NULL
 

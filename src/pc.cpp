@@ -157,7 +157,6 @@ arma::vec pcov_va_cpp(const arma::mat &X, const arma::mat &Y,
 // random vectors. Biometrika, 104, 829-843. \doi{10.1093/biomet/asx043}
 //'
 //' @export
-// [[Rcpp::export]]
 double pcov_cpp(const arma::mat &X, const arma::mat &Y,
 				const std::string &estimation_method, const int n_threads = 4)
 {
@@ -203,7 +202,6 @@ double pcov_cpp(const arma::mat &X, const arma::mat &Y,
 // random vectors. Biometrika, 104, 829-843. \doi{10.1093/biomet/asx043}
 //'
 //' @export
-// [[Rcpp::export]]
 double pcor_cpp(const arma::mat &X, const arma::mat &Y,
 				const std::string &estimation_method = "u",
 				const int n_threads = 4)
@@ -252,7 +250,6 @@ double pcor_cpp(const arma::mat &X, const arma::mat &Y,
 // random vectors. Biometrika, 104, 829-843. \doi{10.1093/biomet/asx043}
 //'
 //' @export
-// [[Rcpp::export]]
 Rcpp::List pcov_test_cpp(const arma::mat &X, const arma::mat &Y,
 						 const std::string &estimation_method = "u",
 						 const int times = 199,
@@ -329,7 +326,6 @@ double chisq_va_cpp(const arma::mat &X, const arma::mat &Y,
 // random vectors. Biometrika, 104, 829-843. \doi{10.1093/biomet/asx043}
 //'
 //' @export
-// [[Rcpp::export]]
 Rcpp::List pcor_test_cpp(const arma::mat &X, const arma::mat &Y,
 						 const std::string &estimation_method = "u",
 						 const int times = 199, const int n_threads = 4)
