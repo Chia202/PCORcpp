@@ -3,36 +3,6 @@
 \name{pcov_cpp}
 \alias{pcov_cpp}
 \title{Calculate the Projection Covariance of Two Random Vectors}
-\usage{
-pcov_cpp(X, Y, estimation_method, n_threads = 4L)
-}
-\arguments{
-\item{X}{A numeric matrix of dimension n x p, where each row is an i.i.d. observation of the first vector.}
-
-\item{Y}{A numeric matrix of dimension n x q, where each row is an i.i.d. observation of the second vector.}
-
-\item{estimation_method}{A character string, either \code{"u"} or \code{"v"}.
-If \code{"u"}, U-statistics are used for estimation; if \code{"v"}, V-statistics are used.}
-
-\item{n_threads}{An integer specifying the number of threads to use for computation. Default is 4.}
-}
-\value{
-A numeric scalar representing the projection covariance between X and Y.
-}
 \description{
-This function computes the projection covariance between two random vectors.
-The two input vectors can have different dimensions, but must have the same number of samples (rows).
-The estimation can be performed using either U-statistics or V-statistics.
-}
-\examples{
-X <- matrix(rnorm(100 * 34, 1), 100, 34)
-Y <- matrix(rnorm(100 * 62, 1), 100, 62)
-pcov_cpp(X, Y, estimation_method = "u", n_threads = 4)
-
-}
-\references{
-L. Zhu, K. Xu, R. Li, W. Zhong (2017). Projection correlation between two random vectors. Biometrika, 104, 829-843. \doi{10.1093/biomet/asx043}
-}
-\seealso{
-\code{\link{pcor_cpp}}, \code{\link{pcor_test_cpp}}
+This function computes the projection covariance between two
 }

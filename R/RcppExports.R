@@ -4,81 +4,109 @@
 #' @name pcov_cpp
 #' @title Calculate the Projection Covariance of Two Random Vectors
 #'
-#' @description This function computes the projection covariance between two random vectors.
-#' The two input vectors can have different dimensions, but must have the same number of samples (rows).
-#' The estimation can be performed using either U-statistics or V-statistics.
+#' @description This function computes the projection covariance between two
+NULL
+
 #'
-#' @param X A numeric matrix of dimension n x p, where each row is an i.i.d. observation of the first vector.
-#' @param Y A numeric matrix of dimension n x q, where each row is an i.i.d. observation of the second vector.
-#' @param estimation_method A character string, either \code{"u"} or \code{"v"}.
-#'   If \code{"u"}, U-statistics are used for estimation; if \code{"v"}, V-statistics are used.
-#' @param n_threads An integer specifying the number of threads to use for computation. Default is 4.
-#' 
-#' @return A numeric scalar representing the projection covariance between X and Y.
-#' 
+#' @param X A numeric matrix of dimension n x p, where each row is an i.i.d.
+NULL
+
+#'
+#' @return A numeric scalar representing the projection covariance between X
+NULL
+
+#'
 #' @examples
 #' X <- matrix(rnorm(100 * 34, 1), 100, 34)
 #' Y <- matrix(rnorm(100 * 62, 1), 100, 62)
 #' pcov_cpp(X, Y, estimation_method = "u", n_threads = 4)
-#' 
+#'
 #' @seealso \code{\link{pcor_cpp}}, \code{\link{pcor_test_cpp}}
-#' 
+#'
 #' @references
-#' L. Zhu, K. Xu, R. Li, W. Zhong (2017). Projection correlation between two random vectors. Biometrika, 104, 829-843. \doi{10.1093/biomet/asx043}
-#' 
-#' @export
-pcov_cpp <- function(X, Y, estimation_method, n_threads = 4L) {
-    .Call(`_PCORcpp_pcov_cpp`, X, Y, estimation_method, n_threads)
-}
+#' L. Zhu, K. Xu, R. Li, W. Zhong (2017). Projection correlation between two
+NULL
 
 #' @name pcor_cpp
 #' @title Calculate the Projection Correlation of Two Random Vectors
 #'
-#' @description This function computes the projection correlation between two random vectors,
-#' which can have different dimensions but must share the same sample size.
-#' The estimation can be done using U-statistics or V-statistics.
+#' @description This function computes the projection correlation between two
+NULL
+
 #'
-#' @param X A numeric matrix of dimension n x p, where each row is an i.i.d. observation of the first vector.
-#' @param Y A numeric matrix of dimension n x q, where each row is an i.i.d. observation of the second vector.
-#' @param estimation_method A character string, either \code{"u"} or \code{"v"}.
-#'   If \code{"u"}, U-statistics are used for estimation; if \code{"v"}, V-statistics are used. Default is \code{"u"}.
-#' @param n_threads An integer specifying the number of threads to use for parallel computation. Default is 4.
-#' 
-#' @return A numeric scalar representing the projection correlation between X and Y.
-#' 
+#' @param X A numeric matrix of dimension n x p, where each row is an i.i.d.
+NULL
+
+#'
+#' @return A numeric scalar representing the projection correlation between X
+NULL
+
+#'
 #' @examples
 #' X <- matrix(rnorm(100 * 34, 1), 100, 34)
 #' Y <- matrix(rnorm(100 * 62, 1), 100, 62)
 #' pcor_cpp(X, Y, estimation_method = "u", n_threads = 4)
-#' 
+#'
 #' @seealso \code{\link{pcov_cpp}}, \code{\link{pcor_test_cpp}}
-#' 
+#'
 #' @references
-#' L. Zhu, K. Xu, R. Li, W. Zhong (2017). Projection correlation between two random vectors. Biometrika, 104, 829-843. \doi{10.1093/biomet/asx043}
-#' 
-#' @export
-pcor_cpp <- function(X, Y, estimation_method = "u", n_threads = 4L) {
-    .Call(`_PCORcpp_pcor_cpp`, X, Y, estimation_method, n_threads)
-}
+#' L. Zhu, K. Xu, R. Li, W. Zhong (2017). Projection correlation between two
+NULL
+
+#' @name pcov_test_cpp
+#' @title Projection Covariance Test for Independence
+#'
+#' @description Perform a permutation test to assess the independence between
+NULL
+
+#'
+#' @param X A numeric matrix of dimension n x p, where each row is an i.i.d.
+NULL
+
+#' @param Y A numeric matrix of dimension n x q, where each row is an i.i.d.
+NULL
+
+#' @param estimation_method A character string, either \code{"u"} or
+NULL
+
+#' @param times An integer specifying the number of permutations to perform.
+NULL
+
+#' @param n_threads An integer specifying the number of threads to use for
+NULL
+
+#'
+#' @return A list with components:
+#' \item{method}{The method name: \code{"Projection Covariance Permutation
+NULL
+
+#'
+#' @examples
+#' X <- matrix(rnorm(10 * 7, 1), 10, 7)
+#' Y <- matrix(rnorm(10 * 6, 1), 10, 6)
+#' pcov_test_cpp(X, Y, estimation_method = "v", times = 199, n_threads = 4)
+#'
+#' @seealso \code{\link{pcov_cpp}}, \code{\link{pcor_cpp}}
+#'
+#' @references
+#' L. Zhu, K. Xu, R. Li, W. Zhong (2017). Projection correlation between two
+NULL
 
 #' @name pcor_test_cpp
 #' @title Projection Correlation Permutation Test for Independence
 #'
-#' @description Perform a permutation test to assess the independence between two random vectors
-#' via projection correlation. The two vectors can have different dimensions but
-#' must share the same sample size.
+#' @description Perform a permutation test to assess the independence between
+NULL
+
 #'
-#' @param X A numeric matrix of dimension n x p, where each row is an i.i.d. observation from the first vector.
-#' @param Y A numeric matrix of dimension n x q, where each row is an i.i.d. observation from the second vector.
-#' @param estimation_method A character string, either \code{"u"} or \code{"v"}.
-#'   If \code{"u"}, U-statistics are used for estimation; if \code{"v"}, V-statistics are used. Default is \code{"u"}.
-#' @param times An integer specifying the number of permutations to perform. Default is 199.
-#' @param n_threads An integer specifying the number of threads to use for parallel computation. Default is 4.
-#' 
+#' @param X A numeric matrix of dimension n x p, where each row is an i.i.d.
+NULL
+
+#'
 #' @return A list with components:
-#' \item{method}{The method name: \code{"Projection Correlation Permutation Test of Independence"}}
-#' \item{stat.value}{The test statistic value (scaled by sample size).}
-#' \item{p.value}{The p-value computed from the permutation distribution under the null hypothesis of independence.}
+#' \item{method}{The method name: \code{"Projection Correlation Permutation
+NULL
+
 #'
 #' @examples
 #' X <- matrix(rnorm(10 * 7, 1), 10, 7)
@@ -88,7 +116,27 @@ pcor_cpp <- function(X, Y, estimation_method = "u", n_threads = 4L) {
 #' @seealso \code{\link{pcov_cpp}}, \code{\link{pcor_cpp}}
 #'
 #' @references
-#' L. Zhu, K. Xu, R. Li, W. Zhong (2017). Projection correlation between two random vectors. Biometrika, 104, 829-843. \doi{10.1093/biomet/asx043}
+#' L. Zhu, K. Xu, R. Li, W. Zhong (2017). Projection correlation between two
+NULL
+
+#'
+#' @export
+pcov_cpp <- function(X, Y, estimation_method, n_threads = 4L) {
+    .Call(`_PCORcpp_pcov_cpp`, X, Y, estimation_method, n_threads)
+}
+
+#'
+#' @export
+pcor_cpp <- function(X, Y, estimation_method = "u", n_threads = 4L) {
+    .Call(`_PCORcpp_pcor_cpp`, X, Y, estimation_method, n_threads)
+}
+
+#'
+#' @export
+pcov_test_cpp <- function(X, Y, estimation_method = "u", times = 199L, n_threads = 4L) {
+    .Call(`_PCORcpp_pcov_test_cpp`, X, Y, estimation_method, times, n_threads)
+}
+
 #'
 #' @export
 pcor_test_cpp <- function(X, Y, estimation_method = "u", times = 199L, n_threads = 4L) {

@@ -1,11 +1,9 @@
 #include <RcppArmadillo.h>
-#include <Rcpp.h>
 #include <cmath>
 
 #ifdef _OPENMP
 #include <omp.h>
 #endif
-
 
 // [[Rcpp::plugins(openmp)]]
 // [[Rcpp::depends(RcppArmadillo)]]
@@ -45,7 +43,8 @@ arma::mat sub_mat_cpp(const arma::mat &mat, int r, int n, int p)
 	return A;
 }
 
-arma::vec one_pcov_cpp(int r, const arma::mat &X, const arma::mat &Y, int n, int p, int q, const std::string &estimation_method)
+arma::vec one_pcov_cpp(int r, const arma::mat &X, const arma::mat &Y, int n,
+					   int p, int q, const std::string &estimation_method)
 {
 	arma::vec out(2);
 
@@ -70,11 +69,16 @@ arma::vec one_pcov_cpp(int r, const arma::mat &X, const arma::mat &Y, int n, int
 		double b = arma::accu(diag_mx % diag_my);
 
 		double sr1 = a - b;
-		double sr2 = arma::accu(xy_mm) - a + 2 * b - arma::accu(mmx) - arma::accu(mmy);
-		double sr3 = (arma::accu(mx) - arma::accu(diag_mx)) * (arma::accu(my) - arma::accu(diag_my)) - 2 * sr1 - 4 * sr2;
+		double sr2 =
+			arma::accu(xy_mm) - a + 2 * b - arma::accu(mmx) - arma::accu(mmy);
+		double sr3 = (arma::accu(mx) - arma::accu(diag_mx)) *
+						 (arma::accu(my) - arma::accu(diag_my)) -
+					 2 * sr1 - 4 * sr2;
 
 		out[0] = sr3 / ((n - 1.0) * (n - 2) * (n - 3) * (n - 4));
-		out[1] = sr1 / ((n - 1.0) * (n - 2)) - 2 * sr2 / ((n - 1.0) * (n - 2) * (n - 3)) + sr3 / ((n - 1.0) * (n - 2) * (n - 3) * (n - 4));
+		out[1] = sr1 / ((n - 1.0) * (n - 2)) -
+				 2 * sr2 / ((n - 1.0) * (n - 2) * (n - 3)) +
+				 sr3 / ((n - 1.0) * (n - 2) * (n - 3) * (n - 4));
 	}
 	else if (estimation_method == "v")
 	{
@@ -91,7 +95,9 @@ arma::vec one_pcov_cpp(int r, const arma::mat &X, const arma::mat &Y, int n, int
 	return out;
 }
 
-arma::vec pcov_va_cpp(const arma::mat &X, const arma::mat &Y, const std::string &estimation_method, const int n_threads = 4)
+arma::vec pcov_va_cpp(const arma::mat &X, const arma::mat &Y,
+					  const std::string &estimation_method,
+					  const int n_threads = 4)
 {
 	int n = X.n_rows;
 	int p = X.n_cols;
@@ -123,31 +129,37 @@ arma::vec pcov_va_cpp(const arma::mat &X, const arma::mat &Y, const std::string 
 //' @name pcov_cpp
 //' @title Calculate the Projection Covariance of Two Random Vectors
 //'
-//' @description This function computes the projection covariance between two random vectors.
-//' The two input vectors can have different dimensions, but must have the same number of samples (rows).
-//' The estimation can be performed using either U-statistics or V-statistics.
+//' @description This function computes the projection covariance between two
+// random vectors. ' The two input vectors can have different dimensions, but
+// must have the same number of samples (rows). ' The estimation can be performed
+// using either U-statistics or V-statistics.
 //'
-//' @param X A numeric matrix of dimension n x p, where each row is an i.i.d. observation of the first vector.
-//' @param Y A numeric matrix of dimension n x q, where each row is an i.i.d. observation of the second vector.
-//' @param estimation_method A character string, either \code{"u"} or \code{"v"}.
-//'   If \code{"u"}, U-statistics are used for estimation; if \code{"v"}, V-statistics are used.
-//' @param n_threads An integer specifying the number of threads to use for computation. Default is 4.
-//' 
-//' @return A numeric scalar representing the projection covariance between X and Y.
-//' 
+//' @param X A numeric matrix of dimension n x p, where each row is an i.i.d.
+// observation of the first vector. ' @param Y A numeric matrix of dimension n x
+// q, where each row is an i.i.d. observation of the second vector. ' @param
+// estimation_method A character string, either \code{"u"} or \code{"v"}. '   If
+//\code{"u"}, U-statistics are used for estimation; if \code{"v"}, V-statistics
+// are used. ' @param n_threads An integer specifying the number of threads to
+// use for computation. Default is 4.
+//'
+//' @return A numeric scalar representing the projection covariance between X
+// and Y.
+//'
 //' @examples
 //' X <- matrix(rnorm(100 * 34, 1), 100, 34)
 //' Y <- matrix(rnorm(100 * 62, 1), 100, 62)
 //' pcov_cpp(X, Y, estimation_method = "u", n_threads = 4)
-//' 
+//'
 //' @seealso \code{\link{pcor_cpp}}, \code{\link{pcor_test_cpp}}
-//' 
+//'
 //' @references
-//' L. Zhu, K. Xu, R. Li, W. Zhong (2017). Projection correlation between two random vectors. Biometrika, 104, 829-843. \doi{10.1093/biomet/asx043}
-//' 
+//' L. Zhu, K. Xu, R. Li, W. Zhong (2017). Projection correlation between two
+// random vectors. Biometrika, 104, 829-843. \doi{10.1093/biomet/asx043}
+//'
 //' @export
 // [[Rcpp::export]]
-double pcov_cpp(const arma::mat &X, const arma::mat &Y, const std::string &estimation_method, const int n_threads = 4)
+double pcov_cpp(const arma::mat &X, const arma::mat &Y,
+				const std::string &estimation_method, const int n_threads = 4)
 {
 	if (X.n_rows != Y.n_rows)
 	{
@@ -164,28 +176,32 @@ double pcov_cpp(const arma::mat &X, const arma::mat &Y, const std::string &estim
 //' @name pcor_cpp
 //' @title Calculate the Projection Correlation of Two Random Vectors
 //'
-//' @description This function computes the projection correlation between two random vectors,
-//' which can have different dimensions but must share the same sample size.
-//' The estimation can be done using U-statistics or V-statistics.
+//' @description This function computes the projection correlation between two
+// random vectors, ' which can have different dimensions but must share the same
+// sample size. ' The estimation can be done using U-statistics or V-statistics.
 //'
-//' @param X A numeric matrix of dimension n x p, where each row is an i.i.d. observation of the first vector.
-//' @param Y A numeric matrix of dimension n x q, where each row is an i.i.d. observation of the second vector.
-//' @param estimation_method A character string, either \code{"u"} or \code{"v"}.
-//'   If \code{"u"}, U-statistics are used for estimation; if \code{"v"}, V-statistics are used. Default is \code{"u"}.
-//' @param n_threads An integer specifying the number of threads to use for parallel computation. Default is 4.
-//' 
-//' @return A numeric scalar representing the projection correlation between X and Y.
-//' 
+//' @param X A numeric matrix of dimension n x p, where each row is an i.i.d.
+// observation of the first vector. ' @param Y A numeric matrix of dimension n x
+// q, where each row is an i.i.d. observation of the second vector. ' @param
+// estimation_method A character string, either \code{"u"} or \code{"v"}. '   If
+//\code{"u"}, U-statistics are used for estimation; if \code{"v"}, V-statistics
+// are used. Default is \code{"u"}. ' @param n_threads An integer specifying the
+// number of threads to use for parallel computation. Default is 4.
+//'
+//' @return A numeric scalar representing the projection correlation between X
+// and Y.
+//'
 //' @examples
 //' X <- matrix(rnorm(100 * 34, 1), 100, 34)
 //' Y <- matrix(rnorm(100 * 62, 1), 100, 62)
 //' pcor_cpp(X, Y, estimation_method = "u", n_threads = 4)
-//' 
+//'
 //' @seealso \code{\link{pcov_cpp}}, \code{\link{pcor_test_cpp}}
-//' 
+//'
 //' @references
-//' L. Zhu, K. Xu, R. Li, W. Zhong (2017). Projection correlation between two random vectors. Biometrika, 104, 829-843. \doi{10.1093/biomet/asx043}
-//' 
+//' L. Zhu, K. Xu, R. Li, W. Zhong (2017). Projection correlation between two
+// random vectors. Biometrika, 104, 829-843. \doi{10.1093/biomet/asx043}
+//'
 //' @export
 // [[Rcpp::export]]
 double pcor_cpp(const arma::mat &X, const arma::mat &Y,
@@ -199,8 +215,71 @@ double pcor_cpp(const arma::mat &X, const arma::mat &Y,
 	return t1 / std::sqrt(t2) / std::sqrt(t3);
 }
 
-// Projection Correlation Test Statistics
-double chisq_va_cpp(const arma::mat &X, const arma::mat &Y, const std::string &estimation_method, const int n_threads = 4)
+//' @name pcov_test_cpp
+//' @title Projection Covariance Test for Independence
+//'
+//' @description Perform a permutation test to assess the independence between
+// two random vectors ' via projection covariance. The two vectors can have
+// different dimensions but ' must share the same sample size.
+//'
+//' @param X A numeric matrix of dimension n x p, where each row is an i.i.d.
+// observation from the first vector.
+//' @param Y A numeric matrix of dimension n x q, where each row is an i.i.d.
+// observation from the second vector.
+//' @param estimation_method A character string, either \code{"u"} or
+//\code{"v"}. If \code{"u"}, U-statistics are used for estimation; if
+//\code{"v"}, V-statistics are used. Default is \code{"u"}.
+//' @param times An integer specifying the number of permutations to perform.
+// Default is 199.
+//' @param n_threads An integer specifying the number of threads to use for
+// parallel computation. Default is 4.
+//'
+//' @return A list with components:
+//' \item{method}{The method name: \code{"Projection Covariance Permutation
+// Test of Independence"}} ' \item{stat.value}{The test statistic value (scaled
+// by sample size).} ' \item{p.value}{The p-value computed from the permutation
+// distribution under the null hypothesis of independence.}
+//'
+//' @examples
+//' X <- matrix(rnorm(10 * 7, 1), 10, 7)
+//' Y <- matrix(rnorm(10 * 6, 1), 10, 6)
+//' pcov_test_cpp(X, Y, estimation_method = "v", times = 199, n_threads = 4)
+//'
+//' @seealso \code{\link{pcov_cpp}}, \code{\link{pcor_cpp}}
+//'
+//' @references
+//' L. Zhu, K. Xu, R. Li, W. Zhong (2017). Projection correlation between two
+// random vectors. Biometrika, 104, 829-843. \doi{10.1093/biomet/asx043}
+//'
+//' @export
+// [[Rcpp::export]]
+Rcpp::List pcov_test_cpp(const arma::mat &X, const arma::mat &Y,
+						 const std::string &estimation_method = "u",
+						 const int times = 199,
+						 const int n_threads = 4)
+{
+	double value = pcov_cpp(X, Y, estimation_method, n_threads);
+	arma::vec values(times);
+	omp_set_num_threads(n_threads);
+	int n = X.n_rows;
+#pragma omp parallel for
+	for (int t = 0; t < times; ++t)
+	{
+		values(t) = pcov_cpp(X.rows(arma::randperm(n)), Y, estimation_method, 1);
+	}
+
+	double count = arma::accu(values < value);
+	double p_value = 1.0 - (count / static_cast<double>(times));
+
+	return Rcpp::List::create(
+		Rcpp::Named("method") =
+			"Projection Covariance Permutation Test of Independence",
+		Rcpp::Named("stat.value") = value, Rcpp::Named("p.value") = p_value);
+}
+
+double chisq_va_cpp(const arma::mat &X, const arma::mat &Y,
+					const std::string &estimation_method,
+					const int n_threads = 4)
 {
 	if (X.n_rows != Y.n_rows)
 	{
@@ -218,21 +297,25 @@ double chisq_va_cpp(const arma::mat &X, const arma::mat &Y, const std::string &e
 //' @name pcor_test_cpp
 //' @title Projection Correlation Permutation Test for Independence
 //'
-//' @description Perform a permutation test to assess the independence between two random vectors
-//' via projection correlation. The two vectors can have different dimensions but
-//' must share the same sample size.
+//' @description Perform a permutation test to assess the independence between
+// two random vectors ' via projection correlation. The two vectors can have
+// different dimensions but ' must share the same sample size.
 //'
-//' @param X A numeric matrix of dimension n x p, where each row is an i.i.d. observation from the first vector.
-//' @param Y A numeric matrix of dimension n x q, where each row is an i.i.d. observation from the second vector.
-//' @param estimation_method A character string, either \code{"u"} or \code{"v"}.
-//'   If \code{"u"}, U-statistics are used for estimation; if \code{"v"}, V-statistics are used. Default is \code{"u"}.
-//' @param times An integer specifying the number of permutations to perform. Default is 199.
-//' @param n_threads An integer specifying the number of threads to use for parallel computation. Default is 4.
-//' 
+//' @param X A numeric matrix of dimension n x p, where each row is an i.i.d.
+// observation from the first vector. ' @param Y A numeric matrix of dimension n
+// x q, where each row is an i.i.d. observation from the second vector. ' @param
+// estimation_method A character string, either \code{"u"} or \code{"v"}. '   If
+//\code{"u"}, U-statistics are used for estimation; if \code{"v"}, V-statistics
+// are used. Default is \code{"u"}. ' @param times An integer specifying the
+// number of permutations to perform. Default is 199. ' @param n_threads An
+// integer specifying the number of threads to use for parallel computation.
+// Default is 4.
+//'
 //' @return A list with components:
-//' \item{method}{The method name: \code{"Projection Correlation Permutation Test of Independence"}}
-//' \item{stat.value}{The test statistic value (scaled by sample size).}
-//' \item{p.value}{The p-value computed from the permutation distribution under the null hypothesis of independence.}
+//' \item{method}{The method name: \code{"Projection Correlation Permutation
+// Test of Independence"}} ' \item{stat.value}{The test statistic value (scaled
+// by sample size).} ' \item{p.value}{The p-value computed from the permutation
+// distribution under the null hypothesis of independence.}
 //'
 //' @examples
 //' X <- matrix(rnorm(10 * 7, 1), 10, 7)
@@ -242,15 +325,14 @@ double chisq_va_cpp(const arma::mat &X, const arma::mat &Y, const std::string &e
 //' @seealso \code{\link{pcov_cpp}}, \code{\link{pcor_cpp}}
 //'
 //' @references
-//' L. Zhu, K. Xu, R. Li, W. Zhong (2017). Projection correlation between two random vectors. Biometrika, 104, 829-843. \doi{10.1093/biomet/asx043}
+//' L. Zhu, K. Xu, R. Li, W. Zhong (2017). Projection correlation between two
+// random vectors. Biometrika, 104, 829-843. \doi{10.1093/biomet/asx043}
 //'
 //' @export
 // [[Rcpp::export]]
-Rcpp::List pcor_test_cpp(const arma::mat &X,
-						 const arma::mat &Y,
+Rcpp::List pcor_test_cpp(const arma::mat &X, const arma::mat &Y,
 						 const std::string &estimation_method = "u",
-						 const int times = 199,
-						 const int n_threads = 4)
+						 const int times = 199, const int n_threads = 4)
 {
 
 	int n = X.n_rows;
@@ -264,14 +346,15 @@ Rcpp::List pcor_test_cpp(const arma::mat &X,
 #pragma omp parallel for
 	for (int t = 0; t < times; ++t)
 	{
-		pcor_permu(t) = chisq_va_cpp(X.rows(arma::randperm(n)), Y, estimation_method, 1);
+		pcor_permu(t) =
+			chisq_va_cpp(X.rows(arma::randperm(n)), Y, estimation_method, 1);
 	}
 
 	double count = arma::accu(pcor_permu < value);
 	double p_value = 1.0 - (count / static_cast<double>(times));
 
 	return Rcpp::List::create(
-		Rcpp::Named("method") = "Projection Correlation Permutation Test of Independence",
-		Rcpp::Named("stat.value") = stat_value,
-		Rcpp::Named("p.value") = p_value);
+		Rcpp::Named("method") =
+			"Projection Correlation Permutation Test of Independence",
+		Rcpp::Named("stat.value") = stat_value, Rcpp::Named("p.value") = p_value);
 }

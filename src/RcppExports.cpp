@@ -39,6 +39,21 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// pcov_test_cpp
+Rcpp::List pcov_test_cpp(const arma::mat& X, const arma::mat& Y, const std::string& estimation_method, const int times, const int n_threads);
+RcppExport SEXP _PCORcpp_pcov_test_cpp(SEXP XSEXP, SEXP YSEXP, SEXP estimation_methodSEXP, SEXP timesSEXP, SEXP n_threadsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< const std::string& >::type estimation_method(estimation_methodSEXP);
+    Rcpp::traits::input_parameter< const int >::type times(timesSEXP);
+    Rcpp::traits::input_parameter< const int >::type n_threads(n_threadsSEXP);
+    rcpp_result_gen = Rcpp::wrap(pcov_test_cpp(X, Y, estimation_method, times, n_threads));
+    return rcpp_result_gen;
+END_RCPP
+}
 // pcor_test_cpp
 Rcpp::List pcor_test_cpp(const arma::mat& X, const arma::mat& Y, const std::string& estimation_method, const int times, const int n_threads);
 RcppExport SEXP _PCORcpp_pcor_test_cpp(SEXP XSEXP, SEXP YSEXP, SEXP estimation_methodSEXP, SEXP timesSEXP, SEXP n_threadsSEXP) {
@@ -58,6 +73,7 @@ END_RCPP
 static const R_CallMethodDef CallEntries[] = {
     {"_PCORcpp_pcov_cpp", (DL_FUNC) &_PCORcpp_pcov_cpp, 4},
     {"_PCORcpp_pcor_cpp", (DL_FUNC) &_PCORcpp_pcor_cpp, 4},
+    {"_PCORcpp_pcov_test_cpp", (DL_FUNC) &_PCORcpp_pcov_test_cpp, 5},
     {"_PCORcpp_pcor_test_cpp", (DL_FUNC) &_PCORcpp_pcor_test_cpp, 5},
     {NULL, NULL, 0}
 };

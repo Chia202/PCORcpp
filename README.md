@@ -12,6 +12,7 @@ remotes::install_github("chia202/PCORcpp")
 
 - `pcov()`: Compute projection covariance between two random vectors
 - `pcor()`: Compute projection correlation coefficient between two random vectors  
+- `pcov.test()`: Perform projection covariance independence test
 - `pcor.test()`: Perform projection correlation independence test
 
 ## Usage Example
@@ -32,8 +33,10 @@ result <- pcor(X, Y, estimation.method = "u", n.threads = 4)
 print(result)
 
 # Perform independence test
-test_result <- pcor.test(X, Y, times = 199, n.threads = 4)
-print(test_result)
+pcov.test_result <- pcov.test(X, Y, times = 199, n.threads = 4)
+print(pcov.test_result)
+pcor.test_result <- pcor.test(X, Y, times = 199, n.threads = 4)
+print(pcor.test_result)
 ```
 
 ## Parameters
