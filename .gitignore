@@ -9,3 +9,9 @@ RcppExports.*
 .RData
 .Ruserdata
 .Rbuildignore
+*.Rcheck/
+*.dll
+*.tar.gz
+*.a
+.vscode/
+*.swp
